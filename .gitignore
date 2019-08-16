@@ -2,5 +2,4 @@ build/*
 *.a
 *.hex
 *.elf
-*.cpp
 .DS_Store
