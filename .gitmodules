@@ -1,0 +1,6 @@
+[submodule "Library/Adafruit-GFX-Library"]
+	path = Library/Adafruit-GFX-Library
+	url = https://github.com/adafruit/Adafruit-GFX-Library
+[submodule "Library/Arduino-Core"]
+	path = Library/Arduino-Core
+	url = https://github.com/nanoterran/ArduinoCore-avr
