@@ -4,3 +4,6 @@
 [submodule "Library/Arduino-Core"]
 	path = Library/Arduino-Core
 	url = https://github.com/nanoterran/ArduinoCore-avr
+[submodule "Library/RTC"]
+	path = Library/RTC
+	url = https://github.com/adafruit/RTClib
