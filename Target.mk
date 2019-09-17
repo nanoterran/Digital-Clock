@@ -9,15 +9,26 @@ MCU = atmega328p
 CPU_FRQ = 16000000L
 B_RATE = 57600 #115200
 DEV = /dev/cu.usbmodem14101
-CORE = $(PROJECT_HOME_DIR)/Library/Arduino-Core/cores/Arduino
-RTC = $(PROJECT_HOME_DIR)/Library/DS3231
-PINS = $(PROJECT_HOME_DIR)/Library/Arduino-Core/variants/standard/
+CORE_DIR = $(PROJECT_HOME_DIR)/Library/Arduino-Core/cores/Arduino
+RTC_DIR = $(PROJECT_HOME_DIR)/Library/DS3231
+PINS_DIR = $(PROJECT_HOME_DIR)/Library/Arduino-Core/variants/standard/
 
 # Build Directoy
-BUILD_DIR ?= $(PROJECT_HOME_DIR)/build
+BUILD_DIR ?= $(PROJECT_HOME_DIR)/Build
 SOURCE_DIR ?= $(PROJECT_HOME_DIR)/Source
 TARGET_HEX ?= $(BUILD_DIR)/$(PROGRAM).hex
 TARGET_ELF ?= $(BUILD_DIR)/$(PROGRAM).elf
+
+# --- SRC_DIRS ---
+# Use SRC_DIRS to specifiy production directories
+# code files.
+SRC_DIRS += \
+	$(SOURCE_DIR)/ClockModel/ \
+	$(SOURCE_DIR)/Timer/ \
+	$(SOURCE_DIR)/ClockView/ \
+	$(SOURCE_DIR)/Button/ \
+	$(SOURCE_DIR)/ClockController/ \
+	$(SOURCE_DIR)/Hardware/ \
 
 # Compiler
 CXX = avr-g++
@@ -27,13 +38,14 @@ OBJCOPY = avr-objcopy
 SIZE = avr-size
 
 # Source files
-SRC = $(wildcard $(SOURCE_DIR)/*.cpp)
-CPP_SRC_CORE = $(wildcard $(CORE)/*.cpp)
-C_SRC_CORE = $(wildcard $(CORE)/*.c)
-S_SRC_CORE = $(wildcard $(CORE)/*.S)
+SRC = $(wildcard $(SOURCE_DIR)/*/*.cpp)
+CPP_SRC_CORE = $(wildcard $(CORE_DIR)/*.cpp)
+C_SRC_CORE = $(wildcard $(CORE_DIR)/*.c)
+S_SRC_CORE = $(wildcard $(CORE_DIR)/*.S)
 
 # Object files
-OBJ := $(SRC:%=$(BUILD_DIR)/%.o) \
+OBJ := \
+	$(SRC:%=$(BUILD_DIR)/%.o) \
 	$(CPP_SRC_CORE:%=$(BUILD_DIR)/%.o) \
 	$(C_SRC_CORE:%=$(BUILD_DIR)/%.o) \
 	$(S_SRC_CORE:%=$(BUILD_DIR)/%.o) \
@@ -60,10 +72,10 @@ FLAGS += \
 	-flto \
 	-DARDUINO_AVR_UNO \
 	-DARDUINO_ARCH_AVR \
-	-I$(CORE) \
-	-I$(PINS) \
-	-I$(RTC) \
-	-I$(SOURCE_DIR) \
+	-I$(CORE_DIR) \
+	-I$(PINS_DIR) \
+	-I$(RTC_DIR) \
+	$(patsubst %,-I%, $(SRC_DIRS)) \
 
 # cpp flags
 CXXFLAGS += \
@@ -137,8 +149,8 @@ size: $(TARGET_ELF)
 
 .PHONY: help
 help:
-	@echo "flash: To flash the hex file into target."
-	@echo "size: To get the size of executable file."
+	@echo "\tflash: To flash the .hex file into target."
+	@echo "\tsize: To get the size of executable file."
 
 # include all Dependencies
 -include $(DEP)
