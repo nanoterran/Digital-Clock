@@ -111,7 +111,7 @@ include $(CPPUTEST_HOME)/build/MakefileWorker.mk
 
 # Automatically build CppUTest for current environment
 $(CPPUTEST_HOME)/lib/libCppUTest.a:
-	cd $(CPPUTEST_HOME)/cpputest_build ; autoreconf .. -i ; cd .. ; ./configure
+	cd $(CPPUTEST_HOME)/cpputest_build ; autoconf .. -i ; cd .. ; ./configure
 	make -C $(CPPUTEST_HOME)
 
 # Deletes CppUtest Automatically
