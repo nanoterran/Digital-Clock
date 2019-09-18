@@ -1,3 +1,5 @@
+# Makefile to compile for the target board.
+# 
 # Program name for executable
 PROGRAM = DigitalClock
 
@@ -5,9 +7,10 @@ PROGRAM = DigitalClock
 PROJECT_HOME_DIR ?= .
 
 # --- Arduino specific ---
+# Change based on Arduino board
 MCU = atmega328p
 CPU_FRQ = 16000000L
-B_RATE = 57600 #115200
+B_RATE = 115200
 DEV = /dev/cu.usbmodem14101
 CORE_DIR = $(PROJECT_HOME_DIR)/Library/Arduino-Core/cores/Arduino
 RTC_DIR = $(PROJECT_HOME_DIR)/Library/DS3231
@@ -19,9 +22,7 @@ SOURCE_DIR ?= $(PROJECT_HOME_DIR)/Source
 TARGET_HEX ?= $(BUILD_DIR)/$(PROGRAM).hex
 TARGET_ELF ?= $(BUILD_DIR)/$(PROGRAM).elf
 
-# --- SRC_DIRS ---
-# Use SRC_DIRS to specifiy production directories
-# code files.
+# Source directories
 SRC_DIRS += \
 	$(SOURCE_DIR)/ClockModel/ \
 	$(SOURCE_DIR)/Timer/ \
@@ -30,7 +31,7 @@ SRC_DIRS += \
 	$(SOURCE_DIR)/ClockController/ \
 	$(SOURCE_DIR)/Hardware/ \
 
-# Compiler
+# AVR toolchain
 CXX = avr-g++
 AR = avr-gcc-ar
 CC = avr-gcc
@@ -135,7 +136,7 @@ $(BUILD_DIR)/%.S.o: %.S
 .PHONY: clean
 clean:
 	@echo "Removing $(BUILD_DIR)";
-	@rm -r $(BUILD_DIR);
+	@$(RM) -r $(BUILD_DIR);
 
 # Flashes the program.hex image into the arduino
 .PHONY: flash
@@ -156,3 +157,4 @@ help:
 -include $(DEP)
 
 MKDIR_P ?= mkdir -p
+RM ?= rm
