@@ -10,8 +10,6 @@
 #include "View_Mock.h"
 #include "Button.h"
 
-#define Times
-
 // Button *buttonOne;
 
 // static const Button_Configuration_t modelConfiguration[] = 
