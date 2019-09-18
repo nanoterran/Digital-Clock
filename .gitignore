@@ -1,4 +1,5 @@
 Build/*
+Testing/Build/*
 *.a
 *.hex
 *.elf
