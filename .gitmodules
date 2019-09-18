@@ -7,3 +7,6 @@
 [submodule "Library/RTC"]
 	path = Library/RTC
 	url = https://github.com/adafruit/RTClib
+[submodule "Testing/CppUTest"]
+	path = Testing/CppUTest
+	url = https://github.com/nanoterran/cpputest
