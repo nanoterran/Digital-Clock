@@ -54,13 +54,6 @@ CPPUTEST_CPPFLAGS += -D__STDC_LIMIT_MACROS
 CPPUTEST_LDFLAGS += -ftest-coverage
 CPPUTEST_LDFLAGS += -fprofile-arcs
 
-# --- MOCKS_SRC_DIRS ---
-# MOCKS_SRC_DIRS specifies a directories where you can put your
-# mocks, stubs and fakes.  You can also just put them
-# in TEST_SRC_DIRS
-MOCKS_SRC_DIRS += \
-	Testing/Mocks/ \
-
 # --- SRC_FILES ---
 # Use SRC_FILES to specifiy individual production
 # code files.
@@ -95,6 +88,16 @@ TEST_SRC_DIRS += \
 	Testing/Tests/ClockController/ \
 	Testing/Tests/Button/ \
 	Testing/Tests/Timer/ \
+
+# --- MOCKS_SRC_DIRS ---
+# MOCKS_SRC_DIRS specifies a directories where you can put your
+# mocks, stubs and fakes.  You can also just put them
+# in TEST_SRC_DIRS
+MOCKS_SRC_DIRS += \
+	Testing/Mocks/ \
+
+# Turn on CppUMock
+CPPUTEST_USE_EXTENSIONS = Y
 
 INCLUDE_DIRS += \
 	$(SRC_DIRS) \
